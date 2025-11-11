@@ -1,76 +1,39 @@
-# Laravel Docker Başlangıç Ortamı
+# Laravel Projesi (Docker’sız Kurulum)
 
-Bu repo, Nginx ve PostgreSQL kullanarak Laravel projeleri geliştirmek için hazır bir Docker ortamı sağlar.
+## Kurulum Adımları
 
-### Gereksinimler
-- Docker
-- Docker Compose
+1. Projeyi klonla:
+   ```bash
+   git clone https://github.com/kullanici/proje-adi.git
+   cd proje-adi
 
-### Hızlı Kurulum ve Başlangıç
 
-1.  **Repoyu Klonla**
+2. Gerekli bağımlılıkları yükle:
+	composer install
+	npm install && npm run dev
 
-    ```bash
-    git clone https://github.com/akadal/laravel
-    cd laravel
-    ```
+	
+3. Ortam dosyasını oluştur:
+	cp .env.example .env
 
-2.  **Docker Konteynerlarını Oluştur ve Başlat**
 
-    Bu komut, gerekli imajları indirip build edecek ve konteynerları arka planda çalıştıracaktır.
+4. .env dosyasında veritabanı ayarlarını yap (örnek: MySQL):
+	DB_CONNECTION=mysql
+	DB_HOST=127.0.0.1
+	DB_PORT=3306
+	DB_DATABASE=laravel
+	DB_USERNAME=root
+	DB_PASSWORD=
 
-    ```bash
-    docker-compose up -d --build
-    ```
+	
+5. Veritabanını oluştur ve migrate et:
+	php artisan migrate
 
-3.  **Yeni Bir Laravel Projesi Oluştur**
 
-    Aşağıdaki komut, çalışan `app` konteyneri içinde Composer'ı kullanarak `laravel` adında yeni bir proje oluşturur.
+6. Sunucuyu Başlat:
+	php artisan serve
 
-    ```bash
-    docker-compose exec app composer create-project laravel/laravel laravel
-    ```
-    > **Not:** Nginx konfigürasyonu, projenin `laravel` isimli bir alt klasörde olmasını bekleyecek şekilde ayarlanmıştır.
 
-    Eğer wsl içinde çalışıyorsanız bir kullanıcı çakışması yaşanıyor. "Permission" hatası alırsanız aşmak için "-u " ile user eşleştirmesi yaparak ilerlemelisiniz:
+7. Tarayıcıda aç:
+	http://127.0.0.1:8000
 
-    ```bash
-    docker-compose exec -u "$(id -u):$(id -g)" app composer create-project laravel/laravel laravel
-    ```
-
-5.  **`.env` Dosyasını Yapılandır**
-
-    Proje ana dizininde, oluşturulan `laravel` klasörünün içindeki `.env.example` dosyasını kopyalayarak `.env` dosyasını oluşturun.
-
-    ```bash
-    cp laravel/.env.example laravel/.env
-    ```
-
-    Oluşturduğunuz `laravel/.env` dosyasını açın ve veritabanı ayarlarını aşağıdaki gibi güncelleyin:
-
-    ```env
-    DB_CONNECTION=pgsql
-    DB_HOST=db
-    DB_PORT=5432
-    DB_DATABASE=laravel
-    DB_USERNAME=user
-    DB_PASSWORD=password
-    ```
-
-6.  **Uygulama Anahtarını (APP_KEY) Oluştur**
-
-    ```bash
-    docker-compose exec app php laravel/artisan key:generate
-    ```
-
-7. **Veritabanını Hazırla**
-
-    ```bash
-    docker-compose exec app php laravel/artisan migrate:fresh
-    ```
-
-### Erişim
-
-Kurulum tamamlandı. Artık projenize tarayıcınızdan erişebilirsiniz:
-
-**http://localhost:2020**
