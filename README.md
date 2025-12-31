@@ -1,7 +1,7 @@
 # Laravel Web Programming Project
 
 This project was developed as part of the **Web Programming** course.
-It was created to practice core Laravel concepts and to prepare for the final exam.
+It aims to demonstrate the fundamental concepts of the Laravel framework and to prepare for the final exam.
 
 ---
 
@@ -18,10 +18,13 @@ It was created to practice core Laravel concepts and to prepare for the final ex
 
 ## Project Features
 
-- Laravel project setup
-- Database table creation with migrations
+- Laravel project initialization
+- Database table creation using migrations
+- Eloquent models for database interaction
 - Model relationships (Category - Product)
-- MVC architecture (Model - View - Controller)
+- Controllers to handle application logic
+- Blade views for data presentation
+- MVC (Model - View - Controller) architecture
 - Authentication system using Laravel Breeze
 - Database seeding with sample data
 - Docker-based development environment
@@ -36,6 +39,7 @@ It was created to practice core Laravel concepts and to prepare for the final ex
 git clone https://github.com/ysfylcnky/laravel.git  
 cd laravel
 ```
+
 ---
 
 ### Step 2: Start Docker containers
@@ -43,6 +47,7 @@ cd laravel
 ```bash
 docker-compose up -d
 ```
+
 ---
 
 ### Step 3: Configure environment file
@@ -70,7 +75,18 @@ docker-compose exec app php laravel/artisan key:generate
 
 ---
 
-### Step 5: Run database migrations
+### Step 5: Create models and migrations
+
+```bash
+docker-compose exec app php laravel/artisan make:model Category -m  
+docker-compose exec app php laravel/artisan make:model Product -m  
+```
+
+Migration files are updated to define the database schema.
+
+---
+
+### Step 6: Run database migrations
 
 ```bash
 docker-compose exec app php laravel/artisan migrate
@@ -78,7 +94,23 @@ docker-compose exec app php laravel/artisan migrate
 
 ---
 
-### Step 6: Install Laravel Breeze (Authentication)
+### Step 7: Create controllers
+
+```bash
+docker-compose exec app php laravel/artisan make:controller ProductController
+```
+
+Controllers are used to retrieve data from models and pass it to views.
+
+---
+
+### Step 8: Create views
+
+Blade view files are created under `resources/views` to display product and category data.
+
+---
+
+### Step 9: Install Laravel Breeze (Authentication)
 
 ```bash
 docker-compose exec app composer require laravel/breeze --dev  
@@ -88,11 +120,11 @@ docker-compose exec app php laravel/artisan migrate
 
 When prompted, select:
 - Blade
-- PHPUnit (recommended)
+- PHPUnit
 
 ---
 
-### Step 7: Seed the database
+### Step 10: Seed the database
 
 ```bash
 docker-compose exec app php laravel/artisan db:seed
@@ -104,7 +136,7 @@ docker-compose exec app php laravel/artisan db:seed
 
 - app/Models → Eloquent models
 - app/Http/Controllers → Controllers
-- resources/views → Blade views
+- resources/views → Blade view files
 - routes/web.php → Web routes
 - database/migrations → Migration files
 - database/seeders → Seeder files
@@ -113,8 +145,8 @@ docker-compose exec app php laravel/artisan db:seed
 
 ## Purpose of the Project
 
-This project was created for educational purposes to understand Laravel fundamentals
-and to practice common tasks such as migrations, controllers, authentication, and seeding.
+This project was created for educational purposes to understand Laravel fundamentals,
+including models, controllers, migrations, authentication, and database seeding.
 
 ---
 
