@@ -1,76 +1,124 @@
-# Laravel Docker Başlangıç Ortamı
+# Laravel Web Programming Project
 
-Bu repo, Nginx ve PostgreSQL kullanarak Laravel projeleri geliştirmek için hazır bir Docker ortamı sağlar.
+This project was developed as part of the **Web Programming** course.
+It was created to practice core Laravel concepts and to prepare for the final exam.
 
-### Gereksinimler
-- Docker
-- Docker Compose
+---
 
-### Hızlı Kurulum ve Başlangıç
+## Technologies Used
 
-1.  **Repoyu Klonla**
+- Laravel
+- PHP
+- PostgreSQL
+- Docker & Docker Compose
+- Laravel Breeze (Authentication)
+- Git & GitHub
 
-    ```bash
-    git clone https://github.com/akadal/laravel
-    cd laravel
-    ```
+---
 
-2.  **Docker Konteynerlarını Oluştur ve Başlat**
+## Project Features
 
-    Bu komut, gerekli imajları indirip build edecek ve konteynerları arka planda çalıştıracaktır.
+- Laravel project setup
+- Database table creation with migrations
+- Model relationships (Category - Product)
+- MVC architecture (Model - View - Controller)
+- Authentication system using Laravel Breeze
+- Database seeding with sample data
+- Docker-based development environment
 
-    ```bash
-    docker-compose up -d --build
-    ```
+---
 
-3.  **Yeni Bir Laravel Projesi Oluştur**
+## Installation and Setup
 
-    Aşağıdaki komut, çalışan `app` konteyneri içinde Composer'ı kullanarak `laravel` adında yeni bir proje oluşturur.
+### Step 1: Clone the repository
 
-    ```bash
-    docker-compose exec app composer create-project laravel/laravel laravel
-    ```
-    > **Not:** Nginx konfigürasyonu, projenin `laravel` isimli bir alt klasörde olmasını bekleyecek şekilde ayarlanmıştır.
+```bash
+git clone https://github.com/ysfylcnky/laravel.git  
+cd laravel
+```
+---
 
-    Eğer wsl içinde çalışıyorsanız bir kullanıcı çakışması yaşanıyor. "Permission" hatası alırsanız aşmak için "-u " ile user eşleştirmesi yaparak ilerlemelisiniz:
+### Step 2: Start Docker containers
 
-    ```bash
-    docker-compose exec -u "$(id -u):$(id -g)" app composer create-project laravel/laravel laravel
-    ```
+```bash
+docker-compose up -d
+```
+---
 
-5.  **`.env` Dosyasını Yapılandır**
+### Step 3: Configure environment file
 
-    Proje ana dizininde, oluşturulan `laravel` klasörünün içindeki `.env.example` dosyasını kopyalayarak `.env` dosyasını oluşturun.
+```bash
+cp laravel/.env.example laravel/.env
+```
 
-    ```bash
-    cp laravel/.env.example laravel/.env
-    ```
+Edit the `.env` file and update database settings:
 
-    Oluşturduğunuz `laravel/.env` dosyasını açın ve veritabanı ayarlarını aşağıdaki gibi güncelleyin:
+DB_CONNECTION=pgsql  
+DB_HOST=db  
+DB_PORT=5432  
+DB_DATABASE=laravel  
+DB_USERNAME=user  
+DB_PASSWORD=password  
 
-    ```env
-    DB_CONNECTION=pgsql
-    DB_HOST=db
-    DB_PORT=5432
-    DB_DATABASE=laravel
-    DB_USERNAME=user
-    DB_PASSWORD=password
-    ```
+---
 
-6.  **Uygulama Anahtarını (APP_KEY) Oluştur**
+### Step 4: Generate application key
 
-    ```bash
-    docker-compose exec app php laravel/artisan key:generate
-    ```
+```bash
+docker-compose exec app php laravel/artisan key:generate
+```
 
-7. **Veritabanını Hazırla**
+---
 
-    ```bash
-    docker-compose exec app php laravel/artisan migrate:fresh
-    ```
+### Step 5: Run database migrations
 
-### Erişim
+```bash
+docker-compose exec app php laravel/artisan migrate
+```
 
-Kurulum tamamlandı. Artık projenize tarayıcınızdan erişebilirsiniz:
+---
 
-**http://localhost:2020**
+### Step 6: Install Laravel Breeze (Authentication)
+
+```bash
+docker-compose exec app composer require laravel/breeze --dev  
+docker-compose exec app php laravel/artisan breeze:install  
+docker-compose exec app php laravel/artisan migrate  
+```
+
+When prompted, select:
+- Blade
+- PHPUnit (recommended)
+
+---
+
+### Step 7: Seed the database
+
+```bash
+docker-compose exec app php laravel/artisan db:seed
+```
+
+---
+
+## Project Structure
+
+- app/Models → Eloquent models
+- app/Http/Controllers → Controllers
+- resources/views → Blade views
+- routes/web.php → Web routes
+- database/migrations → Migration files
+- database/seeders → Seeder files
+
+---
+
+## Purpose of the Project
+
+This project was created for educational purposes to understand Laravel fundamentals
+and to practice common tasks such as migrations, controllers, authentication, and seeding.
+
+---
+
+## Author
+
+Name: Yusuf  
+GitHub: https://github.com/ysfylcnky
